@@ -12,7 +12,6 @@ class App extends Component {
     constructor(props) {
       super(props);
       this.movieStore = new MovieStore();
-      console.log(this.store);
     }
 
     render() {
