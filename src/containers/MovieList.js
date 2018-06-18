@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import MoviesRow from "../components/MoviesRow";
+import Pager from "./Pager";
 
 @inject("movieStore")
 @observer
@@ -17,6 +18,7 @@ class MovieList extends Component {
     return (
       <div>
         <MoviesRow movies={movies}/>
+        <Pager/>
       </div>
     );
   }

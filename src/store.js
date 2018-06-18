@@ -5,6 +5,7 @@ import { REMOTE_URL } from './constants';
 class MovieStore {
   @observable movies = [];
   @observable page = 0;
+  @observable totalPages = 0;
   @observable state = "done";
 
   @action
@@ -18,6 +19,7 @@ class MovieStore {
     })
       .then(response => response.json())
       .then(json => {
+        this.totalPages = json.totalPages - 1;
         this.movies = json.content;
         this.state = "done";
       });
@@ -26,6 +28,7 @@ class MovieStore {
   @action
   changePage(page) {
       this.page = page;
+      this.fetchMovies();
   }
 
 }
