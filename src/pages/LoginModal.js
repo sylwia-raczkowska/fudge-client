@@ -40,7 +40,7 @@ export default class LoginModal extends Component {
                 this.setState({failureBar: true})
             });
         } else {
-            this.state.formData.forEach(d => this.validateField(d, d.value()))
+            Object.keys(this.state.formData).forEach(d => this.validateField(d, this.state.formData[d]));
         }
     }
 
