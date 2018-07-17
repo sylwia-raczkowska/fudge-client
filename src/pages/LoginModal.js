@@ -1,72 +1,107 @@
 import React, {Component} from 'react';
-import {Dialog, FlatButton, RaisedButton, TextField} from "material-ui";
-
-const customContentStyle = {
-    width: '25%',
-    maxWidth: 'none',
-};
+import {TextField} from "material-ui";
+import ModalDialog from "../components/ModalDialog";
+import {validateEmail, validateLength} from "../actions/FormValidators";
+import {ACCESS_TOKEN, login} from '../actions/ApiCaller';
 
 
 export default class LoginModal extends Component {
 
-    state = {
-        open: false,
-    };
+    constructor(props) {
+        super(props);
 
-    handleOpen = () => {
-        this.setState({open: true});
-    };
+        this.state = {
+            formData: {
+                password: '',
+                email: ''
 
-    handleClose = () => {
-        this.setState({open: false});
-    };
+            },
+            formErrors: {
+                password: '',
+                email: ''
+            },
+            valid: false,
+            successBar: false,
+            failureBar: false
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        if (this.state.valid === true) {
+            event.preventDefault();
+            const loginRequest = this.state.formData;
+            login(loginRequest).then(response => {
+                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                this.setState({successBar: true})
+            }).catch(error => {
+                this.setState({failureBar: true})
+            });
+        } else {
+            this.state.formData.forEach(d => this.validateField(d, d.value()))
+        }
+    }
+
+    handleChange(event) {
+        const {formData} = this.state;
+        const name = event.target.name;
+        const value = event.target.value;
+        formData[name] = value;
+        this.setState({formData},
+            () => {
+                this.validateField(name, value)
+            });
+    }
 
     render() {
-
-        const actions = [
-            <FlatButton
-                label="Cancel"
-                primary={true}
-                onClick={this.handleClose}
-            />,
-            <FlatButton
-                label="Login"
-                primary={true}
-                disabled={true}
-                onClick={this.handleClose}
-            />,
-        ];
-
         return (
-            <div>
-                <FlatButton label="Login"
-                            style={{color: 'white'}}
-                            onClick={this.handleOpen}/>
-                <Dialog
-                    title={"Please sign in"}
-                    actions={actions}
-                    modal={true}
-                    contentStyle={customContentStyle}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}>
-
+            <ModalDialog
+                buttonLabel={"Login"}
+                title={"Please sign in"}
+                handleSubmit={this.handleSubmit}
+                successBar={this.state.successBar}
+                failureBar={this.state.failureBar}
+                message={"Success sign in!"}
+                content={[
                     <TextField
-                        hintText="Enter your Username"
-                        floatingLabelText="Username"
-                    />
-                    <br/>
+                        type="text"
+                        hintText="Enter your email"
+                        errorText={this.state.formErrors.email}
+                        floatingLabelText="Email"
+                        name={"email"}
+                        fullWidth={true}
+                        onChange={this.handleChange}/>,
+                    <br/>,
                     <TextField
-                        type="password"
-                        hintText="Enter your Password"
+                        type="Password"
+                        hintText="Type your password"
                         floatingLabelText="Password"
-                    />
-                    <br/>
-                    < RaisedButton
-                        label="Submit"
-                        primary={true}/>
-                </Dialog>
-            </div>
+                        name={"password"}
+                        errorText={this.state.formErrors.password}
+                        fullWidth={true}
+                        onChange={this.handleChange}/>]}/>
         );
     }
+
+    validateField(name, value) {
+
+        const {formErrors} = this.state;
+
+        if (name === 'password') {
+            formErrors[name] = validateLength(value)
+        }
+
+        if (name === 'email') {
+            formErrors[name] = validateEmail(value)
+        }
+
+        this.setState({formErrors});
+        this.setState({valid: formErrors[name] === ''});
+
+    }
+
 }
+
 
