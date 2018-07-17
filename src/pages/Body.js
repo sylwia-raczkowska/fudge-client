@@ -1,7 +1,6 @@
 import { Switch, Route } from 'react-router-dom'
 import React from 'react';
 import MoviePage from "./MoviePage";
-import Route from "react-router-dom/es/Route";
 
 import MovieList from '../containers/MovieList'
 
