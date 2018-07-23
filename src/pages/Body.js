@@ -8,9 +8,7 @@ const Body = () => (
     <main>
         <Switch>
           <Route exact path="/list" component={MovieList}/>
-            {/*<Route path='/register' component={Register}/>*/}
-            {<Route path='/movie/:movieId' component={MoviePage}/>}
-          <Route exact path="/list" component={MovieList}/>
+            <Route exact path='/movie/:movieId' component={MoviePage}/>
         </Switch>
     </main>
 );

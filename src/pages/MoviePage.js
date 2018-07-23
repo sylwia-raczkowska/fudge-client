@@ -1,26 +1,20 @@
 import React, {Component} from "react";
 import BackComponent from "../components/BackComponent";
-import {Card, CardMedia, CardText, CardTitle, List, ListItem} from "material-ui";
+import {Card, CardMedia, CardTitle} from "material-ui";
 import {Rating} from 'material-ui-rating'
 import styled from 'styled-components';
-import {inject} from "mobx-react/index";
+import {observer, inject} from 'mobx-react';
+import MovieDetails from "../components/MovieDetails";
+import RecommendationRate from "../components/RecommendationRate";
+import {rate} from "../actions/ApiCaller";
 
 
 const cardStyles = {
     margin: "20px 100px 20px 100px",
     padding: 40,
-    height: "500px",
+    height: "800px",
     position: "relative",
     width: "90%"
-};
-
-
-const rightHalf = {
-    marginLeft: "550px",
-    position: "absolute",
-    left: 70,
-    right: 50,
-    top: 50
 };
 
 const StyledDiv = styled.div`
@@ -28,6 +22,13 @@ const StyledDiv = styled.div`
     top: 50;
     left: 50;
     text-align:center;
+`;
+
+const StyledImg = styled.img`
+    max-height:600px;
+    max-width:500px;
+    height:auto;
+    width:auto;
 `;
 
 const mediaStyles = {
@@ -43,67 +44,61 @@ const ratingStyles = {
     bottom: 400
 };
 
-
-// const StyledCard = styled(Card)`
-//     && {
-//     margin: 20px 100px 20px 100px;
-//     padding: 40;
-//     position: relative;
-//     height: 500px;
-//     }
-// `;
-
+const MAX_RATE = 10;
 
 @inject("movieStore")
+
+@observer
 export default class MoviePage extends Component {
+
 
     constructor(props) {
         super(props);
         props.movieStore.getMovie(1);
+
+        this.state = {
+            rate: null
+        }
     }
 
     rate(value) {
-        console.log(value);
-    }
-
-    generate(element, label, value) {
-        return [0, 1, 2].map(value =>
-            React.cloneElement(element, {
-                key: value,
-            }),
-        );
+        const ratingRequest = {
+            movieId: 1,
+            rating: value/2
+        };
+        rate(ratingRequest);
+        this.setState({rate: value});
     }
 
     render() {
-        const { movie } = this.props.movieStore;
+        const {movie} = this.props.movieStore;
+        if (this.state.rate === null) {
+            this.state.rate = movie.userRate ? movie.userRate*2 :  null;
+        }
         return (
             <div className="container">
                 <BackComponent></BackComponent>
                 <Card style={cardStyles}>
                     <StyledDiv>
                         <CardMedia style={mediaStyles}
-                                   overlay={<CardTitle title={movie.title} subtitle={movie.details.country} style={textStyles}/>}>
-                            <img src={require({movie.details.Poster})} alt=""/>
+                                   overlay={<CardTitle title={movie.title} subtitle={movie.genres}
+                                                       style={textStyles}/>}>
+                            <StyledImg src={movie && movie.details && movie.details.Poster} alt=""/>
+
                         </CardMedia>
-                        <h2>10/10</h2>
-                        <Rating style={ratingStyles} value={10} max={10} onChange={v => this.rate(v)}/>
+                        {this.state.rate ? <h1>{this.state.rate} / {MAX_RATE}</h1> : <h1>Rate this movie!</h1>}
+                        <Rating style={ratingStyles} value={this.state.rate} max={MAX_RATE} onChange={v => this.rate(v)}/>
+
                     </StyledDiv>
-                    <Card style={rightHalf}>
-                        <CardText>
-                            <div>
-                                <List>
-                                    {this.generate(
-                                        <ListItem disabled={true}>
-                                            <div></div>
-                                        </ListItem>
-                                    )}
-                                </List>
-                            </div>
-                        </CardText>
-                    </Card>
+                    <RecommendationRate/>
+                    <MovieDetails details={movie && movie.details}/>
+
                 </Card>
             </div>
         );
+
     }
+
+
 }
 

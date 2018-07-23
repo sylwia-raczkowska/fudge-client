@@ -33,10 +33,12 @@ export default class LoginModal extends Component {
         if (this.state.valid === true) {
             event.preventDefault();
             const loginRequest = this.state.formData;
-            login(loginRequest).then(response => {
+            login(loginRequest)
+                .then(response => {
                 localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                 this.setState({successBar: true})
-            }).catch(error => {
+                })
+                .catch(error => {
                 this.setState({failureBar: true})
             });
         } else {
