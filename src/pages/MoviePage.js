@@ -54,7 +54,7 @@ export default class MoviePage extends Component {
 
     constructor(props) {
         super(props);
-        props.movieStore.getMovie(1);
+        props.movieStore.getMovie(this.props.match.params.movieId);
 
         this.state = {
             rate: null
@@ -63,7 +63,7 @@ export default class MoviePage extends Component {
 
     rate(value) {
         const ratingRequest = {
-            movieId: 1,
+            movieId: this.props.match.params.movieId,
             rating: value/2
         };
         rate(ratingRequest);
