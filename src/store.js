@@ -4,11 +4,13 @@ import {REMOTE_URL} from "./constants";
 import {createHeader} from "./actions/ApiCaller";
 
 class MovieStore {
-    @observable movies = [];
-    @observable page = 0;
-    @observable totalPages = 0;
-    @observable state = "done";
-    @observable movie = "";
+  @observable movies = [];
+  @observable page = 0;
+  @observable totalPages = 0;
+  @observable state = "done";
+  @observable authenticated = false;
+  @observable movie = "";
+  @observable token = null;
 
     @action
     fetchMovies() {
