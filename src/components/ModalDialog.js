@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Dialog, FlatButton, Snackbar} from "material-ui";
+import {Dialog, FlatButton, IconButton, Snackbar} from "material-ui";
+import Close from 'material-ui/svg-icons/navigation/close';
+
 
 const customContentStyle = {
     width: '25%',
@@ -12,6 +14,8 @@ export default class ModalDialog extends Component {
 
     state = {
         open: false,
+        successBarOpen: false,
+        failureBarOpen: false
     };
 
     handleOpen = () => {
@@ -56,13 +60,15 @@ export default class ModalDialog extends Component {
                     open={this.props.successBar}
                     message={this.props.message}
                     onRequestClose={this.handleClose}
-                    autoHideDuration={500}
+                    autoHideDuration={10}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
                 />
                 <Snackbar
                     open={this.props.failureBar}
                     message="Sorry! Something went wrong. Please try again!"
                     onRequestClose={this.handleClose}
-                    autoHideDuration={500}
+                    autoHideDuration={10}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
                 />
             </div>
         );
