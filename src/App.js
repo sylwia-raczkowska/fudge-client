@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Provider } from 'mobx-react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import NavBar from "./components/NavBar";
+import NavBar from "./containers/NavBar";
 import Body from "./pages/Body";
 
 import MovieStore from "./store";

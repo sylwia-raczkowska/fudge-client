@@ -3,8 +3,12 @@ import {TextField} from "material-ui";
 import ModalDialog from "../components/ModalDialog";
 import {validateEmail, validateLength} from "../actions/FormValidators";
 import {ACCESS_TOKEN, login} from '../actions/ApiCaller';
+import {inject, observer} from "mobx-react/index";
 
 
+
+@inject("movieStore")
+@observer
 export default class LoginModal extends Component {
 
     constructor(props) {
@@ -39,6 +43,9 @@ export default class LoginModal extends Component {
                 this.setState({successBar: true})
                 })
                 .catch(error => {
+                this.setState({successBar: true});
+                this.props.movieStore.login(response.accessToken);
+            }).catch(error => {
                 this.setState({failureBar: true})
             });
         } else {

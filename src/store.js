@@ -1,7 +1,8 @@
-import {action, observable} from "mobx";
+import { observable, action } from 'mobx';
 
-import {REMOTE_URL} from "./constants";
 import {createHeader} from "./actions/ApiCaller";
+import { REMOTE_URL } from './constants';
+import {ACCESS_TOKEN} from "./actions/ApiCaller";
 
 class MovieStore {
   @observable movies = [];
@@ -11,6 +12,12 @@ class MovieStore {
   @observable authenticated = false;
   @observable movie = "";
   @observable token = null;
+
+  constructor() {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      this.login(localStorage.getItem(ACCESS_TOKEN));
+    }
+  }
 
   @action
   fetchMovies() {
@@ -68,6 +75,11 @@ class MovieStore {
     }
 
 
+  @action
+  login(token) {
+    this.authenticated = true;
+    this.token = token;
+  }
 }
 
 export default MovieStore;
