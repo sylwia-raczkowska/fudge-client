@@ -3,6 +3,7 @@ import {AppBar, MenuItem} from "material-ui";
 import LoginModal from "./LoginModal";
 import RegistrationModal from "../pages/RegistrationModal";
 import {inject, observer} from "mobx-react/index";
+import {Link} from "react-router-dom";
 
 const style = {
   display: 'flex',
@@ -18,7 +19,9 @@ const noAuth = (
 
 const auth = (
   <div style={style}>
-    <MenuItem primaryText="Movies" />
+    <Link to={`/`}>
+     <MenuItem primaryText="Movies" />
+    </Link>
     <MenuItem primaryText="Logout" />
   </div>
 );

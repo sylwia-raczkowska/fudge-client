@@ -7,8 +7,8 @@ import MovieList from '../containers/MovieList'
 const Body = () => (
     <main>
         <Switch>
-          <Route exact path="/list" component={MovieList}/>
-            <Route exact path='/movie/:movieId' component={MoviePage}/>
+          <Route exact path="/" component={MovieList}/>
+          <Route exact path='/movie/:movieId' component={MoviePage}/>
         </Switch>
     </main>
 );

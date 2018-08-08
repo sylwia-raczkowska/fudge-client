@@ -39,12 +39,12 @@ export default class LoginModal extends Component {
             const loginRequest = this.state.formData;
             login(loginRequest)
                 .then(response => {
-                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                this.setState({successBar: true})
+                    localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                    this.setState({successBar: true});
+                    this.props.movieStore.login(response.accessToken);
                 })
                 .catch(error => {
                 this.setState({successBar: true});
-                this.props.movieStore.login(response.accessToken);
             }).catch(error => {
                 this.setState({failureBar: true})
             });

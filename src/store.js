@@ -80,6 +80,12 @@ class MovieStore {
     this.authenticated = true;
     this.token = token;
   }
+
+  @action
+  logout() {
+    this.authenticated = false;
+    this.token = "";
+  }
 }
 
 export default MovieStore;
