@@ -47,7 +47,6 @@ class MovieStore {
     })
       .then(response => response.json())
       .then(json => {
-        debugger
         this.totalPages = json.totalPages - 1;
         this.movies = json.content;
         this.state = "done";
