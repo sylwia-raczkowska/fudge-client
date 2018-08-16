@@ -47,10 +47,8 @@ const ratingStyles = {
 const MAX_RATE = 10;
 
 @inject("movieStore")
-
 @observer
 export default class MoviePage extends Component {
-
 
     constructor(props) {
         super(props);
@@ -90,7 +88,10 @@ export default class MoviePage extends Component {
                         <Rating style={ratingStyles} value={this.state.rate} max={MAX_RATE} onChange={v => this.rate(v)}/>
 
                     </StyledDiv>
-                    <RecommendationRate/>
+                    <RecommendationRate imdbAverage={movie && movie.details && movie.details.imdbRating}
+                                        movieId={movie.movieId}
+                                        showPredictedRate={!this.state.rate}
+                    />
                     <MovieDetails details={movie && movie.details}/>
 
                 </Card>

@@ -40,13 +40,11 @@ export default class LoginModal extends Component {
             login(loginRequest)
                 .then(response => {
                     localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                    this.setState({successBar: true});
                     this.props.movieStore.login(response.accessToken);
+                    this.setState({successBar: true});
                 })
                 .catch(error => {
-                this.setState({successBar: true});
-            }).catch(error => {
-                this.setState({failureBar: true})
+                this.setState({failureBar: true});
             });
         } else {
             Object.keys(this.state.formData).forEach(d => this.validateField(d, this.state.formData[d]));

@@ -7,7 +7,7 @@ const detailsStyle = {
     position: "absolute",
     left: 70,
     right: 50,
-    top: 150
+    top: 220
 };
 
 

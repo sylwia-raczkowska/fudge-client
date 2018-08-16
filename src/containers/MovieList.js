@@ -14,8 +14,7 @@ class MovieList extends Component {
   }
 
   render() {
-    const { movies } = this.props.movieStore;
-
+    const {movies} = this.props.movieStore;
     return (
       <div>
         <SearchBar/>
