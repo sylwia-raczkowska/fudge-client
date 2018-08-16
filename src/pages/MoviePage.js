@@ -71,6 +71,8 @@ export default class MoviePage extends Component {
     render() {
         const {movie} = this.props.movieStore;
         const auth = this.props.movieStore.authenticated;
+
+        const rateInfo = auth ? "Rate this movie!" : "Log in to rate the movie!"
         if (this.state.rate === null) {
             this.state.rate = movie.userRate ? movie.userRate*2 :  null;
         }
@@ -85,7 +87,7 @@ export default class MoviePage extends Component {
                             <StyledImg src={movie && movie.details && movie.details.Poster} alt=""/>
 
                         </CardMedia>
-                        {this.state.rate ? <h1>{this.state.rate} / {MAX_RATE}</h1> : <h1>Rate this movie!</h1>}
+                        {this.state.rate ? <h1>{this.state.rate} / {MAX_RATE}</h1> : <h1>{rateInfo}</h1>}
                         <Rating disabled={!auth} style={ratingStyles} value={this.state.rate} max={MAX_RATE} onChange={v => this.rate(v)}/>
 
                     </StyledDiv>
