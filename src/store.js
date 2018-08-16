@@ -117,11 +117,14 @@ class MovieStore {
         fetch(`${REMOTE_URL}/ratings/averageRating/${this.movieId}`, {
             headers: createHeader()
         })
-            .then(response => response.json())
-            .then(json => {
-                this.averageRating = json;
-                this.state = "done";
-            });
+            .then(function (response) {
+                if (response.status === 200) {
+                    return response.json();
+                }
+            }).then(json => {
+            this.averageRating = json;
+            this.state = "done";
+        })
     }
 
 
@@ -132,11 +135,14 @@ class MovieStore {
         fetch(`${REMOTE_URL}/ratings/predictedRating/${this.movieId}`, {
             headers: createHeader()
         })
-            .then(response => response.json())
-            .then(json => {
-                this.predictedRating = json;
-                this.state = "done";
-            });
+            .then(function (response) {
+                if (response.status === 200) {
+                    return response.json();
+                }
+            }).then(json => {
+            this.predictedRating = json;
+            this.state = "done";
+        })
     }
 }
 
