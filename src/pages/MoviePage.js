@@ -93,7 +93,7 @@ export default class MoviePage extends Component {
                     </StyledDiv>
                     <RecommendationRate imdbAverage={movie && movie.details && movie.details.imdbRating}
                                         movieId={movie.movieId}
-                                        showPredictedRate={!this.state.rate}
+                                        hidePredictedRate={this.state.rate != null}
                     />
                     <MovieDetails details={movie && movie.details}/>
 
