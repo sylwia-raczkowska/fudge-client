@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Dialog, FlatButton, IconButton, Snackbar} from "material-ui";
-import Close from 'material-ui/svg-icons/navigation/close';
+import {Dialog, FlatButton, Snackbar} from "material-ui";
 
 
 const customContentStyle = {

@@ -17,10 +17,6 @@ class Pager extends Component {
 
     DISPLAY_ELEMENTS = 5;
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { page, totalPages } = this.props.movieStore;
         return (
