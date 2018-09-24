@@ -23,10 +23,9 @@ export default class RecommendationRate extends Component {
         let imdbAverage = this.props.imdbAverage;
         let fudgeAverage = this.props.movieStore.averageRating;
         let predictedRating = this.props.movieStore.predictedRating;
-        let hidePredictedRate = this.props.hidePredictedRate;
         let predictedInfo;
         let averageInfo;
-        if (!hidePredictedRate && predictedRating != null) {
+        if (predictedRating != null) {
             predictedInfo =
                 <RateDiv>
                     <h3>Your rate by FUDGE: {predictedRating}</h3>
